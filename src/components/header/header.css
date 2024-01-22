@@ -1,0 +1,38 @@
+/* .mHeader{
+    background-color: #2772db;
+    position: fixed;
+    z-index: 10;
+    height: 60px;
+} */
+
+.mHeader.open {
+    transform: translateY(-60px);
+  }
+
+  .toggle-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .avatar-container{
+    display: flex;
+    justify-content:right;
+    position:absolute;
+    right: 20px;
+    top: 10px;
+    z-index: 1;
+     cursor: pointer;
+  
+  }
+  .mHeader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #2772db;
+    padding: 10px;
+    z-index: 1000;
+  }
+  

@@ -26,7 +26,7 @@ const successCode = 'MHC - 0200';
     
     } catch (error) {
         console.error("Error during login:", error);
-        alert("An error occurred during login.");
+        //alert("An error occurred during login.");
     }
    
 };

@@ -22,6 +22,7 @@ import ForgotPassword from '../pages/forgotPassword'
 import VerifyOtp from '../pages/verifyOtp'
 import ChangePassword from '../pages/changePassword'
 import ResetSecretKey from '../pages/resetSecretKey'
+import RecreatePassword from '../pages/recreatePassword'
 
 const SuperAdminRoutes = [
 
@@ -64,7 +65,8 @@ const publicRoutes = [
   {path:'/forgot-password',component:<ForgotPassword/>},
   {path:'/verify-otp',component:<VerifyOtp/>},
   {path:'/change-password',component:<ChangePassword/>},
-  {path:'/resetSecretKey',component:<ResetSecretKey/>}
+  {path:'/resetSecretKey',component:<ResetSecretKey/>},
+  {path:'/recreatePassword',component:<RecreatePassword/>}
 ]
 
 // const defaultRoute = { path: '*', element: <Navigate to="/login" /> };

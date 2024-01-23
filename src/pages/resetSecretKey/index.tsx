@@ -1,37 +1,51 @@
 import React, { useState, useEffect } from "react";
 import Image2 from '../../assets/images/image2.png';
-import { TextField } from "@mui/material";
+import { InputAdornment, TextField } from "@mui/material";
 import { Button } from "reactstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Email } from "@mui/icons-material";
 interface Data{
   email:string;
   jwt:string;
 }
 const ResetSecretKey = () => {
-const jwt = useSelector((state: any) => state.Login.jwt);
-const [data,setData]=useState<Data>({
+  const jwt = useSelector((state: any) => state.Login.jwt);
+
+  
+  
+    const [data,setData]=useState<Data>({
   email:"",
   jwt:"",
 });
 const navigate=useNavigate();
 // const baseURL = 'http://47.32.254.89:7000/api'
 // const successCode = 'MHC - 0200'
-
- const handleRequest=async()=>{
-  try{
-    const response=await axios.post('http://47.32.254.89:7000/api/user/resetSecretKey',data);
-    console.log('ResetKey Response:',response.data);
+const handleRequest = async () => {
+  try {
+    const response = await axios.post('http://47.32.254.89:7000/api/user/resetSecretKey', data);
+    console.log('ResetKey Response:', response.data);
     alert(response.data.message.description);
-    if(response.data.message && response.data.message.code === 'MHC - 0200')
-    localStorage.setItem('savedEmail', data.jwt);
-
-    //navigate('/secret-key');
-  } catch(error){
-    console.log('Error:',error)
+    if (response.data.message && response.data.message.code === 'MHC - 0200') {
+      navigate('/secret-key');
+    }
+  } catch (error) {
+    console.log('jwt',jwt)
+    alert('Error during reset secret key');
   }
- }
+}
+
+ useEffect(()=>{
+  const savedJwt=localStorage.getItem('jwtToken');
+  if(savedJwt){
+    setData((prevData)=>({...prevData,jwt:savedJwt}))
+  }
+  else{
+    console.log('No Jwt Found in Local Storage');
+  }
+ })
+
   return (
     <div className="p-grid passcode-section" style={{ background: '#fff', width:'100vw', height:'100vh' }}>
       <div className="p-col-12 p-md-7" style={{ backgroundColor: '#fff', display: 'flex', flexDirection: 'column', marginLeft: '-6px', height: '101%' }}>
@@ -49,6 +63,7 @@ const navigate=useNavigate();
         fullWidth
         value={data.email}
         onChange={(e)=>setData({...data,email:e.target.value})}
+        InputProps={{startAdornment:(<InputAdornment position="start"><Email style={{color:'skyblue'}}/></InputAdornment>)}}
       />
       <Button color="info" style={{fontSize:'20px'}} onClick={handleRequest}>
               Click to Send ResetKey

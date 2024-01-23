@@ -69,16 +69,19 @@
 // export default ChangePassword;
 import React, { useState, useEffect } from "react";
 import Image3 from '../../assets/images/image3.png';
-import { TextField } from "@mui/material";
+import { InputAdornment, TextField } from "@mui/material";
 import { Button } from "reactstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Security,Lock} from "@mui/icons-material";
 interface Data{
   email:string;
   newPassword:string;
   confirmNewPass:string;
 }
 const ChangePassword = () => {
+const [passwordsMatch, setPasswordsMatch] = useState(true);
+
 const [data,setData]=useState<Data>({
   email:"",
   confirmNewPass:"",
@@ -96,12 +99,17 @@ useEffect(()=>{
     console.log('No Email found in local storage');
   }
 },[]);
- const handleRequest=async()=>{
+const handleRequest=async()=>{
+  if(!data.newPassword|| !data.confirmNewPass){
+    alert('Please fill the fields')
+    return;
+  }
   try{
     const response=await axios.post('http://47.32.254.89:7000/api/user/reset-password',data);
     console.log('Response:',response.data);
    if(response.data.message && response.data.message.code === 'MHC - 0200')
-   alert(response.data.message.description);
+   //alert(response.data.message.description);
+    alert('Password Changed')
     navigate('/login');
   } catch(error){
     console.log('Error:',error)
@@ -126,6 +134,7 @@ useEffect(()=>{
         type="password"
         value={data.newPassword}
         onChange={(e)=>setData({...data,newPassword:e.target.value})}
+        InputProps={{startAdornment:(<InputAdornment position="start"><Security style={{color:'skyblue'}}/></InputAdornment>)}}
       />
       <TextField
         id="outlined-basic-3"
@@ -135,12 +144,15 @@ useEffect(()=>{
         type="password"
         value={data.confirmNewPass}
         onChange={(e)=>setData({...data,confirmNewPass:e.target.value})}
+        InputProps={{startAdornment:(<InputAdornment position="start"><Lock style={{color:'skyblue'}}/></InputAdornment>)}}
       />
       <Button color="info" style={{fontSize:'20px'}} onClick={handleRequest}>
               Change Password
             </Button>
       </div>
       </form>
+      {/* {!passwordsMatch ? <p style={{ color: 'red' }}>Passwords do not match.</p>:<p style={{color:'green'}}>Password Matched</p>} */}
+
       </div>
     </div>
    
@@ -148,3 +160,4 @@ useEffect(()=>{
 };
 
 export default ChangePassword;
+

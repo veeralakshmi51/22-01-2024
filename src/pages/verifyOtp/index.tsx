@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Image5 from '../../assets/images/image5.png';
-import { TextField } from "@mui/material";
+import { InputAdornment, TextField } from "@mui/material";
 import { Button } from "reactstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Verified } from "@mui/icons-material";
 interface Data{
   email:string;
   otp:string;
@@ -53,7 +54,8 @@ useEffect(()=>{
       fullWidth
       value={data.otp}
       type="password"
-      onChange={(e)=>setData({...data,otp:e.target.value})}/>
+      onChange={(e)=>setData({...data,otp:e.target.value})}
+      InputProps={{startAdornment:(<InputAdornment position="start"><Verified style={{color:'skyblue'}}/></InputAdornment>)}}/>
       <Button color="info" style={{fontSize:'20px'}} onClick={handleRequest}>
               Verify OTP
             </Button>

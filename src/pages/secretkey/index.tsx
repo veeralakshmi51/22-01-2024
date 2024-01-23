@@ -141,7 +141,7 @@ const SecretKey = () => {
             label="Submit"
           ></Button>
         </div>
-        <a style={{ cursor: 'pointer' }}>
+        <a style={{ cursor: 'pointer',color:'blue'}} onClick={()=>navigate('/resetSecretKey')}>
           <div className="forgotPassCode p-3">Forgot Passcode?</div>
         </a>
     </div>
